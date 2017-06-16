@@ -1,0 +1,13 @@
+{
+  "name": "1milion",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {},
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
