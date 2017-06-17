@@ -39,11 +39,14 @@ function handleActionsClick(e) {
 }
 
 function renderScreen(action, screen) {
-  if (action.type === 'image') {
-    document.querySelector(screen === 'preview' ? '#preview' : '#screen').innerHTML = `
-      <img src="${action.url}" />
-    `;
-  }
+  document.querySelector(screen === 'preview' ? '#preview' : '#screen').innerHTML = action.type === 'image' ? `
+    <img src="${action.url}" />
+  ` : `
+  <video autoplay loop muted>
+    <source src="${action.url}" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+  `;
 }
 
 function saveActions() {
@@ -76,7 +79,7 @@ function renderActions() {
   return actions.reduce(function (accumulated, current, index) {
     return accumulated + `
       <div class="action" data-index="${index}">
-        <span>${current.name} - </span>
+        <span>${current.name} (${current.type}) - </span>
         <span data-action="preview">Preview</span>
         <span data-action="view">View</span>
         <span data-action="delete">Delete</span>
