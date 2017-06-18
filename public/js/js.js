@@ -22,7 +22,7 @@ function handleActionSubmit(e) {
 
   actions.push({
     name: e.target.name.value,
-    url: `media/${e.target.url.value}`,
+    url: e.target.url.value,
     type: e.target.type.value
   });
 
@@ -61,7 +61,7 @@ function handleActionsClick(e) {
 
     screen === 'view' && socket.emit('sendToScreen', JSON.stringify({
       clients: (function() {
-        const checkboxes = document.querySelector('#clients').querySelectorAll('input');
+        const checkboxes = document.querySelectorAll(`#actions [data-index="${index}"] input`);
         const _clients = [];
 
         for (let i = 0; i < checkboxes.length; i++) {
@@ -129,7 +129,7 @@ function renderActions() {
         <span class="button" data-action="preview">Preview</span>
         <span class="button" data-action="delete">Delete</span>
 
-        <div id="clients">
+        <div class="clients">
           ${clients
             .reduce((accumulated, current, i) => accumulated += `
               <div>
