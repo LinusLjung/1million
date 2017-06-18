@@ -15,10 +15,24 @@
     <div class="screen" id="preview"></div>
   </div>
 
-  <div class="form-wrapper">
-    <div>Add action</div>
+  <div class="sockets-wrapper">
+    <div class="form-header">Connect to master</div>
 
-    <form>
+    <form id="socket-form">
+      <label for="form-sockets-host">Host IP</label>
+      <input type="text" name="host" id="form-sockets-host" required />
+
+      <label for="form-sockets-name">Name</label>
+      <input type="text" name="name" id="form-sockets-name" required />
+
+      <input type="submit" />
+    </form>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="form-header">Add action</div>
+
+    <form id="action-form">
       <label for="form-action-name">Action name</label>
       <input type="text" name="name" id="form-action-name" required />
 
@@ -33,10 +47,11 @@
 
       <input type="submit" />
     </form>
+
+    <div class="actions" id="actions"></div>
   </div>
 
-  <div class="actions" id="actions"></div>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
   <script src="js/js.js"></script>
 </body>
 </html>
