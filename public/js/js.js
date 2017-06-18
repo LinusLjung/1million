@@ -22,7 +22,7 @@ function handleActionSubmit(e) {
 
   actions.push({
     name: e.target.name.value,
-    url: e.target.url.value,
+    url: `media/${e.target.url.value}`,
     type: e.target.type.value
   });
 
@@ -126,8 +126,8 @@ function renderActions() {
     return accumulated + `
       <div class="action" data-index="${index}">
         <span>${current.name} (${current.type}) - </span>
-        <span data-action="preview">Preview</span>
-        <span data-action="delete">Delete</span>
+        <span class="button" data-action="preview">Preview</span>
+        <span class="button" data-action="delete">Delete</span>
 
         <div id="clients">
           ${clients
@@ -139,7 +139,8 @@ function renderActions() {
             `, '')
           }
         </div>
-        <span data-action="view">Send to screen</span>
+
+        <span class="button" data-action="view">Send to screen</span>
       </div>
     `;
   }, '');

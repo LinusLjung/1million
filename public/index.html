@@ -6,49 +6,52 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>1 Million</title>
 
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/css.css" />
 </head>
 <body>
   <div class="screen-wrapper">
     <div class="screen" id="screen"></div>
-    <div id="button-fullscreen">Fullscreen</div>
     <div class="screen" id="preview"></div>
   </div>
 
-  <div class="sockets-wrapper">
-    <div class="form-header">Connect to master</div>
+  <div class="content">
+    <div id="button-fullscreen">Fullscreen</div>
+    <div class="sockets-wrapper">
+      <div class="form-header">Connect to master</div>
 
-    <form id="socket-form">
-      <label for="form-sockets-host">Host IP</label>
-      <input type="text" name="host" id="form-sockets-host" required />
+      <form id="socket-form">
+        <label for="form-sockets-host">Host IP</label>
+        <input type="text" name="host" id="form-sockets-host" required />
 
-      <label for="form-sockets-name">Name</label>
-      <input type="text" name="name" id="form-sockets-name" required />
+        <label for="form-sockets-name">Name</label>
+        <input type="text" name="name" id="form-sockets-name" required />
 
-      <input type="submit" />
-    </form>
-  </div>
+        <input type="submit" />
+      </form>
+    </div>
 
-  <div class="form-wrapper">
-    <div class="form-header">Add action</div>
+    <div class="form-wrapper">
+      <div class="form-header">Add media</div>
 
-    <form id="action-form">
-      <label for="form-action-name">Action name</label>
-      <input type="text" name="name" id="form-action-name" required />
+      <form id="action-form">
+        <label for="form-action-name">Media name</label>
+        <input type="text" name="name" id="form-action-name" required />
 
-      <label for="form-action-url">Action URL</label>
-      <input type="text" name="url" id="form-action-url" required />
+        <label for="form-action-url">Media URL</label>
+        <input type="text" name="url" id="form-action-url" required />
 
-      <label>Action type</label>
-      <select name="type">
-        <option value="image">Image</option>
-        <option value="video">Video</option>
-      </select>
+        <label>Media type</label>
+        <select name="type">
+          <option value="image">Image</option>
+          <option value="video">Video</option>
+        </select>
 
-      <input type="submit" />
-    </form>
+        <input type="submit" />
+      </form>
 
-    <div class="actions" id="actions"></div>
+      <div class="actions" id="actions"></div>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
