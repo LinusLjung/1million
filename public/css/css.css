@@ -61,6 +61,7 @@ body {
 
 .form-wrapper {
   margin-top: 15px;
+  display: inline-block;
 }
 
 #action-form {
@@ -91,4 +92,5 @@ body {
   border: 1px solid;
   padding: 5px 10px;
   border-radius: 5px;
+  margin-left: 40px;
 }

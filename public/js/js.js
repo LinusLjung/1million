@@ -1,5 +1,4 @@
-let actions = [];
-let clients = [];
+let files = [];
 let socket;
 
 function connectSocket({ host, name }) {
@@ -7,8 +6,7 @@ function connectSocket({ host, name }) {
 
   socket = io(`${host}:8080`);
 
-  socket.on('clients', data => (clients = JSON.parse(data), render()));
-  socket.on('sendToScreen', data => renderScreen(JSON.parse(data), 'screen'));
+  socket.on('files', data => (files = JSON.parse(data), render()));
 
   socket.emit('identify', name);
 }
@@ -53,41 +51,8 @@ function handleActionsClick(e) {
     const screen = e.target.getAttribute('data-action');
     const index = Number(e.target.parentNode.getAttribute('data-index'));
 
-    if (screen === 'delete') {
-      actions.splice(index, 1);
-      saveActions();
-      render();
-    }
-
-    screen === 'view' && socket.emit('sendToScreen', JSON.stringify({
-      clients: (function() {
-        const checkboxes = document.querySelectorAll(`#actions [data-index="${index}"] input`);
-        const _clients = [];
-
-        for (let i = 0; i < checkboxes.length; i++) {
-          checkboxes[i].checked && _clients.push(clients[i].id);
-        }
-
-        return _clients;
-      })(),
-      media: actions[index]
-    }));
-
-    screen === 'preview' && renderScreen(actions[index], screen);
+    renderScreen(files[index], screen);
   }
-}
-
-function renderScreen(action, screen) {
-  document.querySelector(screen === 'preview' ? '#preview' : '#screen').innerHTML = action.type === 'image' ? `
-    <img src="${action.url}" />
-  ` : `
-  <video autoplay loop muted>
-    <source src="${action.url}" type="video/mp4">
-    Your browser does not support HTML5 video.
-  </video>
-  `;
-
-  localStorage.setItem(screen, JSON.stringify(action));
 }
 
 function saveActions() {
@@ -96,7 +61,6 @@ function saveActions() {
 
 function init() {
   document.querySelector('#button-fullscreen').addEventListener('click', goFullscreen, false);
-  document.querySelector('#action-form').addEventListener('submit', handleActionSubmit, false);
   document.querySelector('#socket-form').addEventListener('submit', handleSocketSubmit, false);
   document.querySelector('#actions').addEventListener('click', handleActionsClick, false);
 
@@ -121,25 +85,27 @@ function init() {
   render();
 }
 
+function renderScreen(action, screen) {
+  const type = action.match(/\.mp4$/) ? 'video' : 'image';
+
+  document.querySelector(screen === 'preview' ? '#preview' : '#screen').innerHTML = type === 'image' ? `
+    <img src="media/${action}" />
+  ` : `
+  <video autoplay loop muted>
+    <source src="media/${action}" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+  `;
+
+  localStorage.setItem(screen, JSON.stringify(action));
+}
+
 function renderActions() {
-  return actions.reduce(function (accumulated, current, index) {
+  return files.reduce(function (accumulated, current, index) {
     return accumulated + `
       <div class="action" data-index="${index}">
-        <span>${current.name} (${current.type}) - </span>
+        <span>${current}</span>
         <span class="button" data-action="preview">Preview</span>
-        <span class="button" data-action="delete">Delete</span>
-
-        <div class="clients">
-          ${clients
-            .reduce((accumulated, current, i) => accumulated += `
-              <div>
-                <input type="checkbox" id="client-${index}-${i}" value="${current.id}"/>
-                <label for="client-${index}-${i}">${current.name}</label>
-              </div>
-            `, '')
-          }
-        </div>
-
         <span class="button" data-action="view">Send to screen</span>
       </div>
     `;
